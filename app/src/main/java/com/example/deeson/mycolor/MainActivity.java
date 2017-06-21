@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
     float mSaturation = 1f;
     float mLum = 1f;
     float MID_VALUE;
-    Bitmap bitmap;
+    Bitmap oriBitmap,newBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         SeekBar barSaturation = (SeekBar) findViewById(R.id.seekbarSaturation);
         SeekBar barLum = (SeekBar) findViewById(R.id.seekbarLum);
         MID_VALUE = barHue.getMax() * 1.0F / 2;
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.iv_model0);
+        oriBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.iv_model0);
+        //Android系统不允许直接修改原图
+        newBitmap = Bitmap.createBitmap(oriBitmap.getWidth(), oriBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         barHue.setOnSeekBarChangeListener(this);
         barSaturation.setOnSeekBarChangeListener(this);
         barLum.setOnSeekBarChangeListener(this);
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                 mLum = progress * 1.0F / MID_VALUE;
                 break;
         }
-        iv_photo.setImageBitmap(ImageHelper.handleImageEffect(bitmap, mHue, mSaturation, mLum));
+        iv_photo.setImageBitmap(ImageHelper.handleImageEffect(oriBitmap,newBitmap, mHue, mSaturation, mLum));
     }
 
     @Override

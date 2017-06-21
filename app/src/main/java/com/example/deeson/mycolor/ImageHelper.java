@@ -11,9 +11,7 @@ import android.graphics.Paint;
  */
 public class ImageHelper {
 
-    public static Bitmap handleImageEffect(Bitmap bm, float hue, float saturation, float lum) {
-        //Android系统不允许直接修改原图
-        Bitmap bmp = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
+    public static Bitmap handleImageEffect(Bitmap oriBmp, Bitmap bmp,float hue, float saturation, float lum) {
         Canvas canvas = new Canvas(bmp);
         Paint paint = new Paint();
 
@@ -34,7 +32,7 @@ public class ImageHelper {
         imageMatrix.postConcat(lumMatrix);
 
         paint.setColorFilter(new ColorMatrixColorFilter(imageMatrix));
-        canvas.drawBitmap(bm, 0, 0, paint);
+        canvas.drawBitmap(oriBmp, 0, 0, paint);
 
         return bmp;
     }
